@@ -1,0 +1,6 @@
+mediapipe==0.10.9
+opencv-python
+pandas
+#para instalarlos
+#pip install -r requirements.txt
+# Se debe tener instalado Python 3.8 o superior pero inferior a 3.12
