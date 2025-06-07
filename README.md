@@ -73,3 +73,6 @@ Desarrollar una herramienta de software capaz de analizar actividades humanas es
 8. Conclusiones y Trabajo Futuro  
 9. Referencias Bibliográficas (formato IEEE)
 
+## Enlace a presentación:
+https://drive.google.com/drive/folders/1AR6uxIySGLWzLHBRTTxHWf70CJF1OT5l?usp=sharing
+
