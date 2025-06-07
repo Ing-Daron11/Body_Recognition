@@ -134,7 +134,8 @@ Body_Recognition/
 - Docker para asegurar replicabilidad.
 
 ## 📺 Demo
-<video src="templates/demo/demostration.mp4" controls width="640" poster="templates/demo/turn.png">
+<video controls width="640" poster="templates/demo/turn.png">
+  <source src="templates/demo/demostration.mp4" type="video/mp4">
   Tu navegador no soporta reproducción de video.
 </video>
 
