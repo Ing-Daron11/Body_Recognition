@@ -8,7 +8,9 @@ import os
 
 app = Flask(__name__)
 
-
+MODELS_DIR = os.path.join(os.path.dirname(__file__), "Entrega_3", "scripts")
+scaler = joblib.load(os.path.join(MODELS_DIR, "scaler.pkl"))
+pca = joblib.load(os.path.join(MODELS_DIR, "pca.pkl"))
 
 MODELS_DIR = os.path.join(os.path.dirname(__file__), "Entrega_3", "scripts")
 modelos = {
@@ -57,9 +59,11 @@ def generate_frames():
         if results.pose_landmarks:
             landmarks = results.pose_landmarks.landmark
             features = extract_features(landmarks)
-            input_features = np.array(features, dtype=np.float64)  # Solo 99 features
+            input_features = np.array(features, dtype=np.float64).reshape(1, -1)
+            input_features_scaled = scaler.transform(input_features)
+            input_features_pca = pca.transform(input_features_scaled)
             try:
-                prediction = modelos[modelo_actual].predict([input_features])[0]
+                prediction = modelos[modelo_actual].predict(input_features_pca)[0]
                 # Mapear predicción a etiqueta
                 if isinstance(prediction, str):
                     activity = prediction
@@ -69,7 +73,6 @@ def generate_frames():
                             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             except Exception as e:
                 print(f"Error en el procesamiento: {str(e)}")
-                # Puedes continuar o pasar
             mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
 
         # Codificar el frame para el stream
