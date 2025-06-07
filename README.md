@@ -140,7 +140,8 @@ Body_Recognition/
   Tu navegador no soporta reproducción de video.
 </video>
 
-[▶️ Ver demostración en video](templates/demo/demostration.mp4)
+▶️ Ver demostración en video
+
 
 ### 🎬 Capturas de pantalla
 
@@ -155,13 +156,9 @@ Body_Recognition/
 ## 📊 Resultados Principales
 
 | Modelo | Accuracy (test) | F1-macro |
-
 |---------------|-----------------|----------|
-
 | **SVM** | 77 % | 0.71 |
-
 | **Random Forest** | 99% | 0.99 |
-
 | **XGBoost** | 99% | 0.99 |
 
   
