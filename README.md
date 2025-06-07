@@ -1,78 +1,189 @@
 
-# Proyecto Final - Inteligencia Artificial 1 (2025-1)
+# Proyecto Final - Inteligencia Artificial I (2025-1)
 
-**Universidad ICESI**  
-Ingeniería de Sistemas  
+  
+
+**Universidad ICESI**
+
+Ingeniería de Sistemas
+
+  
 
 ## Integrantes
-* Daron Mercado
-* Santiago Arboleda
-* Miguel Martinez
+
+- Daron Mercado
+
+- Santiago Arboleda
+
+- Miguel Martínez
+
+  
 
 ## 🎯 Objetivo
 
-Desarrollar una herramienta de software capaz de analizar actividades humanas específicas como caminar hacia la cámara, caminar de regreso, girar, sentarse y ponerse de pie. Todo esto mediante el seguimiento de movimientos articulares y posturales en video en tiempo real.
+Desarrollar un sistema de software capaz de analizar y clasificar, en tiempo real, actividades humanas específicas (caminar hacia la cámara, caminar de regreso, girar, sentarse y ponerse de pie) mediante el seguimiento de movimientos articulares extraídos de video en vivo.
+
+  
 
 ## 📥 Entradas
 
-- Video en tiempo real capturado por cámara.
+-  **Video en tiempo real** 
+
+  
 
 ## 📤 Salidas
 
-- Clasificación de la actividad en tiempo real.
-- Análisis de inclinaciones laterales.
-- Seguimiento de movimientos de articulaciones clave (muñecas, rodillas, caderas).
+-  **Clasificación de actividad** en tiempo real (etiquetas: `walking_towards`, `walking_away`, `turning`, `sitting`, `standing_up`).
+
+-  **Métricas posturales**: ángulos de rodilla, cadera y hombro.
+
+-  **Streaming MJPEG** con overlay de landmarks y resultados.
+
+  
 
 ## 🔧 Herramientas y Tecnologías
 
-- **MediaPipe** o **OpenPose** para el seguimiento de articulaciones.
-- Herramientas de anotación: [LabelStudio](https://labelstud.io/) o [CVAT](https://medium.com/cvat-ai/cvat-vs-labelstudio-which-one-is-better-b1a0d333842e)
+-  **MediaPipe Pose** para extracción de 33 landmarks articulares.
 
-## 📊 Flujo de Desarrollo (CRISP-DM Adaptado)
+-  **Python 3.10**, **OpenCV**, **scikit-learn**, **XGBoost**.
 
-### 1. Recolección y Anotación de Datos
-- Captura de videos desde diferentes perspectivas.
-- Anotación manual o automática de actividades.
+-  **Flask** para API RESTful y **Docker** para contenerización.
 
-### 2. Seguimiento Articular
-- Seguimiento de: cadera, rodillas, tobillos, muñecas, hombros, cabeza.
-- Medición de inclinaciones y ángulos articulares.
+-  **StandardScaler** e **Incremental PCA** para preprocesamiento en línea.
 
-### 3. Preprocesamiento
-- Normalización de coordenadas.
-- Filtrado de ruido.
-- Generación de características como velocidad, inclinación y ángulos relativos.
+- Herramientas de anotación: **CVAT**, **LabelStudio**.
 
-### 4. Entrenamiento del Clasificador
-- Modelos supervisados: SVM, Random Forest, XGBoost.
-- División de datos: entrenamiento/prueba.
-- Ajuste de hiperparámetros.
+  
 
-### 5. Inferencia en Tiempo Real
-- Visualización de actividades y mediciones posturales en una interfaz gráfica.
+## 📂 Estructura del repositorio
 
-### 6. Evaluación
-- Pruebas con diferentes personas.
-- Métricas: precisión, recall, F1-score.
+Body_Recognition/
+
+├─ data/ # Videos originales y frames extraídos
+
+├─ notebooks/ # EDA y experimentos preliminares
+
+├─ src/
+
+│ ├─ acquisition.py # Captura de video y streaming
+
+│ ├─ preprocessing.py # Filtrado, normalización y PCA
+
+│ ├─ features.py # Cálculo de ángulos y features derivadas
+
+│ ├─ train.py # Entrenamiento y validación de modelos
+
+│ └─ app.py # Servidor Flask (/video_feed, /predict)
+
+├─ models/ # Modelos serializados (.joblib)
+
+├─ Dockerfile # Contenerización de la aplicación
+
+├─ requirements.txt # Dependencias Python
+
+└─ README.md # Documentación del proyecto
+
+  
+
+## 🚀 Metodología (CRISP-DM adaptado)
+
+1.  **Comprensión del problema**
+
+- Requisitos: accuracy ≥ 0.90, latencia < 100 ms, portabilidad.
+
+- Revisión bibliográfica y definición de entregables semanales.
+
+2.  **Recolección y Anotación de Datos**
+
+- 80 clips (20 por actividad) grabados a 60 fps, fondo neutro e iluminación homogénea.
+
+- Anotación de ventanas de N = 30 frames con etiquetas uniformes.
+
+3.  **Extracción de Landmarks**
+
+- MediaPipe Pose: 33 puntos 3D + visibilidad por fotograma.
+
+- Suavizado exponencial y descarte de visibilidad < 0.5.
+
+4.  **Generación de Features**
+
+- Coordenadas normalizadas con StandardScaler.
+
+- Cálculo de ángulos biomecánicos (rodilla, cadera).
+
+5.  **Reducción de Dimensionalidad**
+
+- PCA: 10 componentes principales (95 % varianza).
+
+- Incremental PCA para escaneo en tiempo real.
+
+6.  **Entrenamiento y Evaluación**
+
+- Modelos: SVM, Random Forest, XGBoost con GridSearchCV.
+
+- División 70/30 train-test, validación cruzada estratificada.
+
+- Métricas: accuracy, precision, recall, F1-score.
+
+7.  **Despliegue e Inferencia**
+
+- API Flask con endpoints `/video_feed` (MJPEG) y `/predict` (JSON).
+
+- Votación ponderada de modelos según F1-score.
+
+- Docker para asegurar replicabilidad.
+
+## 📺 Demo
+<video src="templates/demo/demostration.mp4" controls width="640" poster="templates/demo/turn.png">
+  Tu navegador no soporta reproducción de video.
+</video>
+
+  
+
+## 📊 Resultados Principales
+
+| Modelo | Accuracy (test) | F1-macro |
+
+|---------------|-----------------|----------|
+
+| **SVM** | 77 % | 0.71 |
+
+| **Random Forest** | 99% | 0.99 |
+
+| **XGBoost** | 99% | 0.99 |
+
+  
+
+>  *La SVM mostró el mejor balance entre precisión y generalización en condiciones variables de captura.*
+
+  
+
+## 🔭 Trabajo Futuro
+
+- Aumentar y diversificar el dataset (sujetos, escenarios, condiciones lumínicas).
+
+- Evaluar arquitecturas LSTM/GRU para capturar dependencias temporales.
+
+- Integrar sensores IMU para enriquecer datos de movimiento.
+
+- Desplegar en edge devices (Jetson Nano, Raspberry Pi + TPU).
+
+- Explorar aprendizaje continuo y adaptación de dominio.
+
+  
 
 ## 🧪 Entregables
 
-- **Entrega 1 (Semana 12)**: Pregunta de interés, metodología, métricas, análisis exploratorio, estrategias de ampliación de datos, y aspectos éticos.
-- **Entrega 2 (Semana 14)**: Estrategias de recolección, preprocesamiento, entrenamiento, resultados iniciales y plan de despliegue.
-- **Entrega 3 (Semana 17)**: Reducción de características, despliegue final, evaluación final, entrega al cliente, video de presentación.
+-  **Semana 12:** Metodología, métricas, EDA y estrategia de expansión de datos.
 
-## 🧾 Estructura del Reporte Final
+-  **Semana 14:** Preprocesamiento, PCA, entrenamiento inicial y resultados preliminares.
 
-1. Título  
-2. Resumen  
-3. Introducción  
-4. Teoría  
-5. Metodología  
-6. Resultados  
-7. Análisis de Resultados  
-8. Conclusiones y Trabajo Futuro  
-9. Referencias Bibliográficas (formato IEEE)
+-  **Semana 17:** Sistema final desplegado, evaluación completa y video de presentación.
 
-## Enlace a presentación:
-https://drive.google.com/drive/folders/1AR6uxIySGLWzLHBRTTxHWf70CJF1OT5l?usp=sharing
+  
 
+## 🔗 Enlaces
+
+-  **Presentación:** https://drive.google.com/drive/folders/1AR6uxIySGLWzLHBRTTxHWf70CJF1OT5l
+
+-  **Repositorio:** https://github.com/tuUsuario/Body_Recognition
