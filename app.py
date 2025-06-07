@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, request
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -83,15 +83,19 @@ def generate_frames():
 
     cap.release()
 
-@app.route('/')
-def index():
-    """Página principal."""
-    return render_template('index.html')
-
 @app.route('/video_feed')
 def video_feed():
     """Endpoint del video en streaming."""
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    global modelo_actual
+    if request.method == 'POST':
+        modelo_seleccionado = request.form.get('modelo')
+        if modelo_seleccionado in modelos:
+            modelo_actual = modelo_seleccionado
+    return render_template('index.html', modelo_actual=modelo_actual)
 
 if __name__ == '__main__':
     app.run(debug=True)

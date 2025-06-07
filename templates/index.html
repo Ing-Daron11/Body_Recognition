@@ -1,10 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Body Recognition</title>
+    <meta charset="UTF-8">
+    <title>Body Recognition IA</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #f4f6fb;
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(44, 62, 80, 0.15);
+            padding: 32px 40px 40px 40px;
+        }
+        h1 {
+            color: #2d3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        label {
+            font-size: 1.1em;
+            color: #34495e;
+            font-weight: 500;
+        }
+        select {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid #b2bec3;
+            font-size: 1em;
+            background: #f8fafc;
+            transition: border 0.2s;
+        }
+        select:focus {
+            border: 1.5px solid #0984e3;
+            outline: none;
+        }
+        button {
+            padding: 8px 20px;
+            border-radius: 6px;
+            border: none;
+            background: linear-gradient(90deg, #0984e3 0%, #00b894 100%);
+            color: #fff;
+            font-size: 1em;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(9, 132, 227, 0.08);
+            transition: background 0.2s, transform 0.1s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #00b894 0%, #0984e3 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 18px;
+        }
+        img {
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(44, 62, 80, 0.13);
+            max-width: 100%;
+            border: 2px solid #0984e3;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 18px 8px 24px 8px;
+            }
+            h1 {
+                font-size: 1.3em;
+            }
+            form {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Reconocimiento de Actividad</h1>
-    <img src="{{ url_for('video_feed') }}" width="640" height="480">
+    <div class="container">
+        <h1>Reconocimiento de Actividad Corporal <span style="color:#0984e3;">IA</span></h1>
+        <form method="POST" action="/">
+            <label for="modelo">Selecciona el modelo:</label>
+            <select name="modelo" id="modelo">
+                <option value="SVM" {% if modelo_actual == "SVM" %}selected{% endif %}>SVM</option>
+                <option value="RandomForest" {% if modelo_actual == "RandomForest" %}selected{% endif %}>RandomForest</option>
+                <option value="XGBoost" {% if modelo_actual == "XGBoost" %}selected{% endif %}>XGBoost</option>
+            </select>
+            <button type="submit">Cambiar modelo</button>
+        </form>
+        <div class="video-container">
+            <img src="{{ url_for('video_feed') }}" alt="Video en vivo">
+        </div>
+    </div>
 </body>
 </html>
