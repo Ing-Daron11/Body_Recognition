@@ -47,7 +47,7 @@ Desarrollar un sistema de software capaz de analizar y clasificar, en tiempo rea
 
 -  **Python 3.10**, **OpenCV**, **scikit-learn**, **XGBoost**.
 
--  **Flask** para API RESTful y **Docker** para contenerización.
+-  **Flask** para API RESTful
 
 -  **StandardScaler** e **Incremental PCA** para preprocesamiento en línea.
 
