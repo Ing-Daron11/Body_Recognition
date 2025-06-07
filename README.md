@@ -143,6 +143,10 @@ Body_Recognition/
 ▶️ Ver demostración en video
 
 
+https://github.com/user-attachments/assets/a6d88c8c-8c68-47be-8255-a8db5b4a3abc
+
+
+
 ### 🎬 Capturas de pantalla
 
 <p float="left">
@@ -157,7 +161,7 @@ Body_Recognition/
 
 | Modelo | Accuracy (test) | F1-macro |
 |---------------|-----------------|----------|
-| **SVM** | 77 % | 0.71 |
+| **SVM** | 88 % | 0.88 |
 | **Random Forest** | 99% | 0.99 |
 | **XGBoost** | 99% | 0.99 |
 
