@@ -134,27 +134,40 @@ Body_Recognition/
 - Docker para asegurar replicabilidad.
 
 ## 📺 Demo
-<video src="templates/demo/demostration.mp4" controls width="640" poster="templates/demo/turn.png">
+
+<video controls width="640" poster="templates/demo/turn.png">
+  <source src="templates/demo/demostration.mp4" type="video/mp4">
   Tu navegador no soporta reproducción de video.
 </video>
+
+▶️ Ver demostración en video
+
+
+https://github.com/user-attachments/assets/a6d88c8c-8c68-47be-8255-a8db5b4a3abc
+
+
+
+### 🎬 Capturas de pantalla
+
+<p float="left">
+  <img src="templates/demo/turn.png" alt="Girar" width="320" />
+  <img src="templates/demo/sitting.png" alt="Sentado" width="320" />
+</p>
+
 
   
 
 ## 📊 Resultados Principales
 
 | Modelo | Accuracy (test) | F1-macro |
-
 |---------------|-----------------|----------|
-
-| **SVM** | 77 % | 0.71 |
-
+| **SVM** | 88 % | 0.88 |
 | **Random Forest** | 99% | 0.99 |
-
 | **XGBoost** | 99% | 0.99 |
 
   
 
->  *La SVM mostró el mejor balance entre precisión y generalización en condiciones variables de captura.*
+>  *El XGBoost mostró el mejor balance entre precisión y generalización en condiciones variables de captura.*
 
   
 
