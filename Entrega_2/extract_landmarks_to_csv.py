@@ -5,8 +5,8 @@ import mediapipe as mp
 import os
 import csv
 
-videos_dir = './videos_data_set' 
-output_dir = './data_set_videos_csv'
+videos_dir = 'Entrega_2/videos_data_set' 
+output_dir = 'Entrega_2/data_set_videos_csv'
 os.makedirs(output_dir, exist_ok=True)
 
 # Inicializar MediaPipe Pose
