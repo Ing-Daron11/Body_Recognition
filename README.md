@@ -166,7 +166,7 @@ Body_Recognition/
 
   
 
->  *La SVM mostró el mejor balance entre precisión y generalización en condiciones variables de captura.*
+>  *El XGBoost mostró el mejor balance entre precisión y generalización en condiciones variables de captura.*
 
   
 
