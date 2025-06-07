@@ -199,4 +199,4 @@ https://github.com/user-attachments/assets/a6d88c8c-8c68-47be-8255-a8db5b4a3abc
 
 -  **Presentación:** https://drive.google.com/drive/folders/1AR6uxIySGLWzLHBRTTxHWf70CJF1OT5l
 
--  **Repositorio:** https://github.com/tuUsuario/Body_Recognition
+-  **Repositorio:** https://github.com/Ing-Daron11/Body_Recognition
