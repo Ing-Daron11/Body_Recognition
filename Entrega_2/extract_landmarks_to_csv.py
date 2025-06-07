@@ -14,7 +14,7 @@ mp_pose = mp.solutions.pose
 pose = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, min_tracking_confidence=0.5)
 
 # Función para procesar un solo video
-def process_video(video_path, label, video_id):
+def process_video(video_path, label):
     cap = cv2.VideoCapture(video_path)
     data_rows = []
 
@@ -32,7 +32,6 @@ def process_video(video_path, label, video_id):
             for landmark in results.pose_landmarks.landmark:
                 row.extend([landmark.x, landmark.y, landmark.z])
             row.append(label)
-            row.append(video_id)
             data_rows.append(row)
 
         frame_index += 1
@@ -44,16 +43,17 @@ def process_video(video_path, label, video_id):
 header = ['frame']
 for i in range(33):
     header += [f'x{i}', f'y{i}', f'z{i}']
-header += ['label', 'video_id']
+header += ['label']
 
 # Procesar todos los videos
 for filename in os.listdir(videos_dir):
     if filename.endswith('.mp4'):
         print(f"Procesando: {filename}")
         video_path = os.path.join(videos_dir, filename)
+        
         label = "_".join(os.path.splitext(filename)[0].split("_")[:1])
-        video_id = os.path.splitext(filename)[0]  # nombre del archivo sin extensión
-        data = process_video(video_path, label, video_id)
+
+        data = process_video(video_path, label)
 
         # Guardar en CSV
         csv_filename = filename.replace('.mp4', '.csv')
